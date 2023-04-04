@@ -23,6 +23,9 @@ if (!require("ipumsr")) stop("Reading IPUMS data into R requires the ipumsr pack
 
 ddi <- read_ipums_ddi("highered_00001.xml")
 data <- read_ipums_micro(ddi)
-
+library(moderndive) 
+library(Stat2Data)
+library(ggplot2)
+library(dplyr)
 ```
 
