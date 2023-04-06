@@ -35,3 +35,7 @@ ddi <- read_ipums_ddi("highered_00002.xml")
 data <- read_ipums_micro(ddi)
 ```
 
+```{r}
+data <- data[,!names(data) %in% c("WEIGHT", "SAMPLE", "SURID")]
+```
+
