@@ -72,10 +72,7 @@ head(new_data1)
 
 ```{r}
 data_6years %>%
-  mutate(CHTOT = case_when(CHTOT == 98 ~ 0,
-                           CHTOT == 1 ~ 1,
-                           CHTOT == 3 ~ 3)) %>%
-  ggplot(aes(x=AGE, y=last06)) +
+  ggplot(aes(x=AGE, y=last06, color= CHTOT)) +
   geom_point(
     position=position_jitter(height=.01)
     ) +
