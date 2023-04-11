@@ -39,3 +39,45 @@ data <- read_ipums_micro(ddi)
 data <- data[,!names(data) %in% c("WEIGHT", "SAMPLE", "SURID")]
 ```
 
+```{r}
+data_6years <- data %>%
+  mutate(last06 = case_when(MR03Y5 >= 2006 | ACFPT == 1 | ACFPT == 2 ~ 1, 
+                            MR03Y5 < 2006 | ACFPT == 98 | ACFPT == 3 ~ 0)) %>%
+  mutate(chU6 = case_when(CH6IN == 0 | CH6IN == 98 ~ 0,
+                          CH6IN == 1 ~ 1)) %>%
+  mutate(GENDER = GENDER -1)
+```
+
+```{r}
+model_6years <- glm( last06 ~ AGE, data = data_6years, family = binomial)
+summary(model_6years)
+```
+```{r}
+probabilities <- model_6years %>% 
+  predict(data_6years, type = "response")
+predicted.classes <- ifelse(probabilities> 0.5, 0, 1)
+mean(predicted.classes == data_6years$last06)
+```
+```{r}
+new_data1 <- exp(cbind(OR = coef(model_6years), confint(model_6years)))
+head(new_data1)
+
+```
+
+```{r}
+data_6years %>%
+  mutate(CHTOT = case_when(CHTOT == 98 ~ 0,
+                           CHTOT == 1 ~ 1,
+                           CHTOT == 3 ~ 3)) %>%
+  ggplot(aes(x=AGE, y=last06)) +
+  geom_point(
+    position=position_jitter(height=.01)
+    ) +
+  geom_smooth(
+    method=glm,
+    method.args=list(family=binomial),
+    se=FALSE,
+    formula = y~x
+    )
+```
+
