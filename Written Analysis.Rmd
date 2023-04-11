@@ -47,9 +47,15 @@ data_6years <- data %>%
                           CH6IN == 1 ~ 1)) %>%
   mutate(GENDER = GENDER -1)
 ```
+```{r}
+data_6years$CHTOT <- factor(data_6years$CHTOT,
+                       levels = c(98, 1,3),
+                       labels = c("No Child", "One Child", "2 or More Children")
+                       )
+```
 
 ```{r}
-model_6years <- glm( last06 ~ AGE, data = data_6years, family = binomial)
+model_6years <- glm( last06 ~ AGE + CHTOT, data = data_6years, family = binomial)
 summary(model_6years)
 ```
 ```{r}
