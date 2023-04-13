@@ -1,7 +1,7 @@
 ---
-title: "Group Project - Written Analysis"
+title: "Group Project - Draft Proposal"
 author: "Tseegi Nyamdorj, Tina Chang, Jinwen Xiang, My My Tran"
-date: '2023-03-05'
+date: '2023-03-13'
 output: 
   pdf_document:
     toc: yes
@@ -17,6 +17,65 @@ output:
     df_print: paged
     code_folding: show
 ---
+# Title: The Influence of Parenthood and Age on Adults Pursuing Higher Education
+
+# Purpose and Hypotheses
+The aim of this project is to investigate the impact of parenthood on the likelihood of adults obtaining higher education, with a specific focus on parents with children and the number of children they have. Previous research suggests that having children may affect a parent's pursuit of higher education. For instance, Kulp (2016) found that "mothers with doctorates tended to take longer to complete the degree and graduated at an older age than their non-parent counterparts. They tended to finance their degrees through loans and personal savings rather than scholarships" (Kulp, p.255)." Given these findings, we are interested in exploring this relationship.
+
+The \textbf{primary hypothesis} is that adults with no children or fewer children are more likely to pursue higher education in their adult years than adults with 3 or more children.
+
+The \textbf{secondary hypothesis}: 
+
+1. Younger adults are more likely to have attended higher education within the last six years than older adults.
+
+# Data
+
+This study will use data from the National Surveys of College Graduates (NSCG), Recent College Graduates (NSRCG), and Doctorate Recipients (SDR) available in the IPUMS database. The NSCG is a survey of individuals residing in the United States who hold a bachelor's degree or higher, while the SDR collects data from individuals who received a doctorate degree from a US institution. The NSRCG collects data from individuals who obtained a science or engineering degree from a US institution within the last two years. All three surveys collect data from individuals under the age of 76. To increase our sample size, we will be using data from the year 2010. The data is available at this URL: https://highered.ipums.org/highered-action/variables/group?id=demog.
+
+# Outcome Variable
+
+The outcome variable determines whether or not the adult is pursuing or has pursued higher education in the last 6 years. It is binary; 0 indicates false and 1 indicates true.
+
+We will use logistic regression to model this outcome.
+
+# Explanatory Variables
+
+For the primary explanatory variable, we will use the variable CHTOT; the number of children, which is categorical with three levels: 1 - one child, 3 - two or more children, 98 - no child
+
+For the secondary explanatory variables,
+
+-AGE; the age of the parent, which is numerical from 23 to 75.
+
+-ACFPT; current enrollment student status (1 - part-time student, 2- full-time student, 3- not enrolled in a degree program but taking courses, 98 - logical skip)
+
+The explanatory variables shown in our regression models:
+
+## Primary Hypothesis
+
+The primary hypothesis is that adults with no children or fewer children are more likely to pursue higher education in their adult years than adults with 3 or more children.
+
+The test of our hypothesis will be:
+
+$H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = 0$
+
+$H_A: \beta_1 \neq \beta_2 \neq \beta_3 \neq \beta_4 \neq0$
+
+$logit(degree within last 6 years)=\beta_0+\beta_1CHTOT+\beta_2 * 1(nochild)+\beta_3 * 1(one child)+\beta_4 * 1(2+ children)$
+
+## Secondary Hypothesis
+Younger adults are more likely to have attended higher education within the last six years than older adults.
+
+The test of our hypothesis will be:
+
+$H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = 0$
+
+$H_A: \beta_1 \neq \beta_2 \neq \beta_3 \neq \beta_4 \neq0$
+
+$logit(degree within last 6 years)=\beta_0+\beta_1CHTOT+\beta_2 * 1(no child) * AGE+\beta_3 * 1(one child) * AGE+\beta_4 * 1(2+ children)*AGE$
+
+
+# Exploratory Visualization
+
 ```{r}
 library(ipumsr)
 library(Stat2Data)
