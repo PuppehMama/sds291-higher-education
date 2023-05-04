@@ -118,6 +118,20 @@ model_6years <- glm( last06 ~ AGE + CHTOT, data = data_6years, family = binomial
 summary(model_6years)
 ```
 ```{r}
+age_6years_simple <- glm( last06 ~ AGE, data = data_6years, family = binomial)
+summary(age_6years_simple)
+```
+```{r}
+numberChild_6years_simple <- glm( last06 ~ CHTOT, data = data_6years, family = binomial)
+summary(numberChild_6years_simple)
+```
+
+```{r}
+anova(numberChild_6years_simple, model_6years, test="Chisq")
+anova(age_6years_simple, model_6years, test="Chisq")
+```
+
+```{r}
 probabilities <- model_6years %>% 
   predict(data_6years, type = "response")
 predicted.classes <- ifelse(probabilities> 0.5, 0, 1)
